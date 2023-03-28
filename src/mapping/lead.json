@@ -1,0 +1,19 @@
+{
+  "idKey": "id",
+  "titleKeyName": "description",
+  "externalUrl": "lead/",
+  "main": [
+    [
+      {
+        "name": "dueTime",
+        "label": "Due Date",
+        "type": "date"
+      },
+      {
+        "name": "value",
+        "label": "Amount",
+        "type": "currency"
+      }
+    ]
+  ]
+}

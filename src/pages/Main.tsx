@@ -1,79 +1,114 @@
-import { useState } from "react";
 import {
-  Context,
   H1,
-  HorizontalDivider,
-  LoadingSpinner,
-  Property,
-  proxyFetch,
   Stack,
-  useDeskproAppEvents,
+  useDeskproLatestAppContext,
   useInitialisedDeskproAppClient,
+  useQueryWithClient,
 } from "@deskpro/app-sdk";
-import * as React from "react";
-/*
-    Note: the following page component contains example code, please remove the contents of this component before you
-    develop your app. For more information, please refer to our apps
-    guides @see https://support.deskpro.com/en-US/guides/developers/anatomy-of-an-app
-*/
+import noteJson from "../mapping/note.json";
+import contactJson from "../mapping/contact.json";
+import leadJson from "../mapping/lead.json";
+import activitiesJson from "../mapping/activities.json";
+
+import { getActivitiesByContactId, getContactByEmail } from "../api/api";
+import { FieldMapping } from "../Components/FieldMapping/FieldMapping";
+import { LogoAndLinkButton } from "../Components/LogoAndLinkButton/LogoAndLinkButton";
 
 export const Main = () => {
-  const [ticketContext, setTicketContext] = useState<Context | null>(null);
-  const [examplePosts, setExamplePosts] = useState<
-    { id: string; title: string }[]
-  >([]);
+  const { context } = useDeskproLatestAppContext();
 
-  // Add a "refresh" button @see https://support.deskpro.com/en-US/guides/developers/app-elements
   useInitialisedDeskproAppClient((client) => {
-    client.registerElement("myRefreshButton", { type: "refresh_button" });
+    client.setTitle("Nutshell");
+
+    client.registerElement("refreshButton", { type: "refresh_button" });
   });
 
-  // Listen for the "change" event and store the context data
-  // as local state @see https://support.deskpro.com/en-US/guides/developers/app-events
-  useDeskproAppEvents({
-    onChange: setTicketContext,
-  });
-
-  // Use the apps proxy to fetch data from a third party
-  // API @see https://support.deskpro.com/en-US/guides/developers/app-proxy
-  useInitialisedDeskproAppClient((client) =>
-    (async () => {
-      const fetch = await proxyFetch(client);
-
-      const response = await fetch(
-        "https://jsonplaceholder.typicode.com/posts"
-      );
-
-      const posts = await response.json();
-
-      setExamplePosts(posts.slice(0, 3));
-    })()
+  const contactQuery = useQueryWithClient(
+    ["Contact", context?.data.user.primaryEmail],
+    (client) => getContactByEmail(client, context?.data.user.primaryEmail),
+    {
+      enabled: !!context,
+    }
   );
 
-  // If we don't have a ticket context yet, show a loading spinner
-  if (ticketContext === null) {
-    return <LoadingSpinner />;
-  }
+  const activityQuery = useQueryWithClient(
+    ["Activities", context?.data.user.primaryEmail],
+    (client) =>
+      getActivitiesByContactId(client, contactQuery.data?.result.id as number),
+    {
+      enabled: !!contactQuery.isSuccess,
+    }
+  );
 
-  // Show some information about a given
-  // ticket @see https://support.deskpro.com/en-US/guides/developers/targets and third party API
+  const contact = contactQuery.data?.result;
+
+  const leads = contact?.leads;
+
+  const notes = contact?.notes;
+
+  const activities = activityQuery.data?.result;
+
   return (
-    <>
-      <H1>Ticket Data</H1>
-      <Stack gap={12} vertical>
-        <Property title="Ticket ID">{ticketContext.data.ticket.id}</Property>
-        <Property title="Ticket Subject">
-          {ticketContext.data.ticket.subject}
-        </Property>
-      </Stack>
-      <HorizontalDivider width={2} />
-      <H1>Example Posts</H1>
-      {examplePosts.map((post) => (
-        <div key={post.id}>
-          <Property title="Post Title">{post.title}</Property>
-          <HorizontalDivider width={2} />
-        </div>
-      ))}
-    </>
+    <Stack vertical>
+      {contact && (
+        <Stack style={{ width: "100%" }} vertical gap={8}>
+          <Stack
+            style={{
+              justifyContent: "space-between",
+              width: "100%",
+              alignItems: "center",
+            }}
+          >
+            <H1>{contact.name?.displayName}</H1>
+            <LogoAndLinkButton endpoint={"leads"}></LogoAndLinkButton>
+          </Stack>
+          <FieldMapping
+            fields={[contact]}
+            metadata={contactJson.main}
+            internalUrl={`/person/`}
+            idKey="id"
+          />
+        </Stack>
+      )}
+      {leads && leads?.length !== 0 && (
+        <Stack style={{ width: "100%" }} vertical gap={8}>
+          <Stack
+            style={{
+              justifyContent: "space-between",
+              width: "100%",
+              alignItems: "center",
+            }}
+          >
+            <H1>Leads ({leads?.length})</H1>
+            <LogoAndLinkButton endpoint={"leads"}></LogoAndLinkButton>
+          </Stack>
+          <FieldMapping
+            titleAccessor={(field) => field[leadJson.titleKeyName]}
+            fields={leads}
+            internalUrl={`/`}
+            metadata={leadJson.main}
+            idKey={leadJson.idKey}
+          />
+        </Stack>
+      )}
+      {activities && activities?.length !== 0 && (
+        <Stack style={{ width: "100%" }} vertical gap={8}>
+          <H1>Activities ({activities?.length})</H1>
+          <FieldMapping
+            titleAccessor={() => `Activity with ${contact?.name.displayName}`}
+            fields={activities}
+            internalUrl={`/`}
+            metadata={activitiesJson.main}
+            idKey={activitiesJson.idKey}
+          />
+        </Stack>
+      )}
+      {notes && notes?.length !== 0 && (
+        <Stack style={{ width: "100%" }} vertical gap={5}>
+          <H1>Notes ({notes?.length})</H1>
+          <FieldMapping fields={notes} metadata={noteJson.main} />
+        </Stack>
+      )}
+    </Stack>
   );
 };
