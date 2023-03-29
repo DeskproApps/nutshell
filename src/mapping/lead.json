@@ -2,6 +2,51 @@
   "idKey": "id",
   "titleKeyName": "description",
   "externalUrl": "lead/",
+  "title": "Lead",
+  "view": [
+    [
+      {
+        "name": "stageset.name",
+        "label": "Pipeline",
+        "type": "textInObj"
+      }
+    ],
+    [
+      {
+        "name": "stage",
+        "label": "Stage",
+        "type": "text"
+      }
+    ],
+    [
+      {
+        "name": "value",
+        "label": "Amount",
+        "type": "currency"
+      }
+    ],
+    [
+      {
+        "name": "dueTime",
+        "label": "Expected close date",
+        "type": "date"
+      }
+    ],
+    [
+      {
+        "name": "confidence",
+        "label": "Confidence",
+        "type": "percentage"
+      }
+    ],
+    [
+      {
+        "name": "assignee.name",
+        "label": "Assignee",
+        "type": "textInObj"
+      }
+    ]
+  ],
   "main": [
     [
       {

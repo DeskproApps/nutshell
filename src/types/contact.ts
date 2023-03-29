@@ -45,7 +45,7 @@ export interface IContact {
   notes: INote[];
   lastContactedDate: string;
   contactedCount: number;
-  tags: unknown[];
+  tags: string[];
   description: string;
   legacyId: null;
   mergedInto: unknown[];

@@ -9,12 +9,13 @@ import {
 import noteJson from "../mapping/note.json";
 import contactJson from "../mapping/contact.json";
 import leadJson from "../mapping/lead.json";
-import activitiesJson from "../mapping/activities.json";
+import activitiesJson from "../mapping/activity.json";
 
 import { getActivitiesByContactId, getContactByEmail } from "../api/api";
 import { FieldMapping } from "../components/FieldMapping/FieldMapping";
 import { LogoAndLinkButton } from "../components/LogoAndLinkButton/LogoAndLinkButton";
 import { useEffect, useMemo } from "react";
+import { titleAccessor } from "../utils/utils";
 
 export const Main = () => {
   const { context } = useDeskproLatestAppContext();
@@ -44,6 +45,8 @@ export const Main = () => {
     }
   );
 
+  const titles = useMemo(() => titleAccessor(), []);
+
   const activityQuery = useQueryWithClient(
     ["Activities", context?.data.user.primaryEmail],
     (client) =>
@@ -65,23 +68,13 @@ export const Main = () => {
     <Stack vertical>
       {contact && (
         <Stack style={{ width: "100%" }} vertical gap={8}>
-          <Stack
-            style={{
-              justifyContent: "space-between",
-              width: "100%",
-              alignItems: "center",
-            }}
-          >
-            <H1>{contact.name?.displayName}</H1>
-            <LogoAndLinkButton
-              endpoint={`person/${contact.id}`}
-            ></LogoAndLinkButton>
-          </Stack>
           <FieldMapping
             fields={[contact]}
+            title={contact.name?.displayName}
+            internalUrl={`/view/contact/`}
+            externalUrl={`person/${contact.id}`}
             metadata={contactJson.main}
-            internalUrl={`/person/`}
-            idKey="id"
+            idKey={leadJson.idKey}
           />
         </Stack>
       )}
@@ -98,9 +91,9 @@ export const Main = () => {
             <LogoAndLinkButton endpoint={"leads"}></LogoAndLinkButton>
           </Stack>
           <FieldMapping
-            titleAccessor={(field) => field[leadJson.titleKeyName]}
+            childTitleAccessor={titles.lead}
             fields={leads}
-            internalUrl={`/`}
+            internalChildUrl={`/view/lead/`}
             metadata={leadJson.main}
             idKey={leadJson.idKey}
           />
@@ -110,9 +103,8 @@ export const Main = () => {
         <Stack style={{ width: "100%" }} vertical gap={8}>
           <H1>Activities ({activities?.length})</H1>
           <FieldMapping
-            titleAccessor={() => `Activity with ${contact?.name.displayName}`}
+            childTitleAccessor={titles.activity}
             fields={activities}
-            internalUrl={`/`}
             metadata={activitiesJson.main}
             idKey={activitiesJson.idKey}
           />

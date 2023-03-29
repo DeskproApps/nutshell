@@ -1,6 +1,75 @@
 {
   "titleKeyName": "name.displayName",
   "externalUrl": "person/",
+  "title": "Contact",
+  "idKey": "id",
+  "view": [
+    [
+      {
+        "name": "description",
+        "label": "Description",
+        "type": "text"
+      }
+    ],
+    [
+      {
+        "name": "email",
+        "label": "Email",
+        "type": "email"
+      }
+    ],
+    [
+      {
+        "name": "phone",
+        "label": "Phone",
+        "type": "phone"
+      }
+    ],
+    [
+      {
+        "name": "account",
+        "label": "Company",
+        "type": "accounts"
+      }
+    ],
+    [
+      {
+        "name": "assignee",
+        "label": "Assignee",
+        "type": "assignee"
+      }
+    ],
+    [
+      {
+        "name": "address",
+        "label": "Address",
+        "type": "address"
+      }
+    ],
+    [
+      {
+        "name": "tags",
+        "label": "Tags",
+        "type": "tags"
+      }
+    ]
+  ],
+  "viewLead": [
+    [
+      {
+        "name": "name",
+        "label": "Person",
+        "type": "text"
+      }
+    ],
+    [
+      {
+        "name": "jobTitle",
+        "label": "Position",
+        "type": "text"
+      }
+    ]
+  ],
   "main": [
     [
       {
