@@ -14,6 +14,13 @@ export const getContactByEmail = async (
     email
   );
 
+  if (
+    !contactAccountByEmailRes.result ||
+    !contactAccountByEmailRes.result.contacts.length
+  ) {
+    throw new Error("No contact found");
+  }
+
   const contactId = contactAccountByEmailRes.result.contacts[0].id;
 
   const contactById = await getContactById(client, contactId);

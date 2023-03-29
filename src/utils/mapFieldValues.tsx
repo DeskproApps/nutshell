@@ -80,8 +80,6 @@ export const mapFieldValues = (
       }
 
       case "phone": {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        //@ts-ignore
         const phoneFields = field.phone?.["--primary"];
 
         value = phoneFields?.number ? phoneFields.E164 : null;

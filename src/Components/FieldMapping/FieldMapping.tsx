@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import {
   H1,
   H3,
@@ -89,14 +88,10 @@ export const FieldMapping = ({
                 );
               case 4:
               case 2:
-                //@ts-ignore
                 return (
                   <PropertyRow key={i}>
-                    {usableFields.map((e) => (
-                      <Property
-                        style={{ fontSize: "10px !important" }}
-                        title={e.key as string}
-                      >
+                    {usableFields.map((e, ii) => (
+                      <Property title={e.key as string} key={ii}>
                         <P5>{e.value || "-"}</P5>
                       </Property>
                     ))}
@@ -144,7 +139,7 @@ export const FieldMapping = ({
               margin: "8px 0px 8px 0px",
               width: "100vh",
               marginLeft: i === fields.length - 1 ? "-20px" : "0px",
-              backgroundColor: theme.colors.grey10,
+              backgroundColor: theme?.colors.grey10,
             }}
           />
         </Stack>
