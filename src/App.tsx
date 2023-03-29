@@ -15,7 +15,7 @@ import "@deskpro/deskpro-ui/dist/deskpro-custom-icons.css";
 import "@deskpro/deskpro-ui/dist/deskpro-ui.css";
 import { Suspense } from "react";
 import { query } from "./utils/query";
-import { ErrorFallback } from "./Components/ErrorFallback/ErrorFallback";
+import { ErrorFallback } from "./components/ErrorFallback/ErrorFallback";
 
 function App() {
   return (

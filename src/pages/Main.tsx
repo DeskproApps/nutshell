@@ -11,8 +11,8 @@ import leadJson from "../mapping/lead.json";
 import activitiesJson from "../mapping/activities.json";
 
 import { getActivitiesByContactId, getContactByEmail } from "../api/api";
-import { FieldMapping } from "../Components/FieldMapping/FieldMapping";
-import { LogoAndLinkButton } from "../Components/LogoAndLinkButton/LogoAndLinkButton";
+import { FieldMapping } from "../components/FieldMapping/FieldMapping";
+import { LogoAndLinkButton } from "../components/LogoAndLinkButton/LogoAndLinkButton";
 
 export const Main = () => {
   const { context } = useDeskproLatestAppContext();
