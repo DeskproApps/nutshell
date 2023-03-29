@@ -60,7 +60,9 @@ export const Main = () => {
             }}
           >
             <H1>{contact.name?.displayName}</H1>
-            <LogoAndLinkButton endpoint={"leads"}></LogoAndLinkButton>
+            <LogoAndLinkButton
+              endpoint={`person/${contact.id}`}
+            ></LogoAndLinkButton>
           </Stack>
           <FieldMapping
             fields={[contact]}
