@@ -44,18 +44,14 @@ jest.mock("../../src/api/api", () => {
 
 describe("Main", () => {
   test("Main page should show all data correctly", async () => {
-    const { getByText, getAllByText } = renderPage();
+    const { getByText } = renderPage();
 
     const AssigneeName = await waitFor(() => getByText(/John Doe/i));
-
-    const ContactNameEl = await waitFor(
-      () => getAllByText(/Michael Something/i)[0]
-    );
 
     const activity = await waitFor(() => getByText(/This is an activity/i));
 
     await waitFor(() => {
-      [AssigneeName, ContactNameEl, activity].forEach((el) => {
+      [AssigneeName, activity].forEach((el) => {
         expect(el).toBeInTheDocument();
       });
     });

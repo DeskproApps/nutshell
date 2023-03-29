@@ -1,6 +1,7 @@
 import {
   H1,
   Stack,
+  useDeskproAppClient,
   useDeskproLatestAppContext,
   useInitialisedDeskproAppClient,
   useQueryWithClient,
@@ -13,15 +14,27 @@ import activitiesJson from "../mapping/activities.json";
 import { getActivitiesByContactId, getContactByEmail } from "../api/api";
 import { FieldMapping } from "../components/FieldMapping/FieldMapping";
 import { LogoAndLinkButton } from "../components/LogoAndLinkButton/LogoAndLinkButton";
+import { useEffect, useMemo } from "react";
 
 export const Main = () => {
   const { context } = useDeskproLatestAppContext();
+  const { client } = useDeskproAppClient();
+
+  const height = document.querySelector("body")?.clientHeight || 1500;
 
   useInitialisedDeskproAppClient((client) => {
     client.setTitle("Nutshell");
 
+    client.deregisterElement("nutshellLink");
+
     client.registerElement("refreshButton", { type: "refresh_button" });
   });
+
+  useEffect(() => {
+    if (!client) return;
+
+    client.setHeight(height);
+  }, [client, height]);
 
   const contactQuery = useQueryWithClient(
     ["Contact", context?.data.user.primaryEmail],

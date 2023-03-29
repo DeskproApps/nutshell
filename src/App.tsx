@@ -42,7 +42,7 @@ function App() {
   }, []);
 
   useInitialisedDeskproAppClient((client) => {
-    client.setHeight(bodyHeight);
+    client?.setHeight(bodyHeight);
   });
 
   return (
