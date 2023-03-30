@@ -2,11 +2,12 @@ import {
   IDeskproClient,
   Spinner,
   Stack,
+  useDeskproAppEvents,
   useInitialisedDeskproAppClient,
   useMutationWithClient,
 } from "@deskpro/app-sdk";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { FieldMapping } from "../../components/FieldMapping/FieldMapping";
 import contactJson from "../../mapping/contact.json";
@@ -19,6 +20,7 @@ import { getActivityById, getContactById, getLeadById } from "../../api/api";
 
 export const ViewList = () => {
   const { objectName, objectId } = useParams();
+  const navigate = useNavigate();
 
   const [correctJson, setCorrectJson] = useState<IJson | null>(null);
 
@@ -32,6 +34,15 @@ export const ViewList = () => {
   >((client, data) => data?.function(client, data.searchValue));
 
   const data = itemMutation.data?.result;
+
+  useDeskproAppEvents({
+    async onElementEvent(id) {
+      switch (id) {
+        case "nutshellHomeButton":
+          navigate("/redirect");
+      }
+    },
+  });
 
   useInitialisedDeskproAppClient(
     (client) => {

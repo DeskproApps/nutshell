@@ -13,6 +13,13 @@
     ],
     [
       {
+        "name": "milestone.name",
+        "label": "Stage",
+        "type": "textInObj"
+      }
+    ],
+    [
+      {
         "name": "stage",
         "label": "Stage",
         "type": "text"

@@ -2,6 +2,7 @@ import {
   H1,
   Stack,
   useDeskproAppClient,
+  useDeskproAppEvents,
   useDeskproLatestAppContext,
   useInitialisedDeskproAppClient,
   useQueryWithClient,
@@ -16,12 +17,23 @@ import { FieldMapping } from "../components/FieldMapping/FieldMapping";
 import { LogoAndLinkButton } from "../components/LogoAndLinkButton/LogoAndLinkButton";
 import { useEffect, useMemo } from "react";
 import { titleAccessor } from "../utils/utils";
+import { useNavigate } from "react-router-dom";
 
 export const Main = () => {
   const { context } = useDeskproLatestAppContext();
   const { client } = useDeskproAppClient();
+  const navigate = useNavigate();
 
   const height = document.querySelector("body")?.clientHeight || 1500;
+
+  useDeskproAppEvents({
+    async onElementEvent(id) {
+      switch (id) {
+        case "nutshellHomeButton":
+          navigate("/redirect");
+      }
+    },
+  });
 
   useInitialisedDeskproAppClient((client) => {
     client.setTitle("Nutshell");
@@ -29,6 +41,10 @@ export const Main = () => {
     client.deregisterElement("nutshellLink");
 
     client.registerElement("refreshButton", { type: "refresh_button" });
+
+    client.registerElement("nutshellHomeButton", {
+      type: "home_button",
+    });
   });
 
   useEffect(() => {
