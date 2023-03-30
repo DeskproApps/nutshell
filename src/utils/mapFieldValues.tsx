@@ -121,7 +121,7 @@ export const mapFieldValues = (
         value = (
           <Stack gap={4}>
             {field.tags.map((tag, index) => (
-              <Tag color={usedColorsTags[index]} label={tag}></Tag>
+              <Tag color={usedColorsTags[index]} key={index} label={tag}></Tag>
             ))}
           </Stack>
         );

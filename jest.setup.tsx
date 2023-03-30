@@ -63,7 +63,6 @@ jest.mock("@deskpro/app-sdk", () => ({
       deregisterElement: () => {},
       setHeight: () => {},
       setTitle: () => {},
-      setHeight: () => {},
     });
   },
   useDeskproAppTheme: () => ({ mockTheme }),
@@ -87,16 +86,36 @@ jest.mock("@deskpro/app-sdk", () => ({
       isLoading: false,
     };
   },
-  useQueryMutationWithClient: (queryFn: () => any) => {
-    let data;
-
+  useMutationWithClient: () => {
     return {
-      mutate: () => {
-        data = queryFn();
-      },
+      mutate: () => {},
       isSuccess: true,
       isLoading: false,
-      data,
+      data: {
+        result: {
+          id: 1,
+          name: {
+            displayName: "Michael Something",
+          },
+          description: "This is a contact description",
+          email: "email@email.com",
+          phone: "123456789",
+          account: "Company",
+          owner: {
+            name: "John Doe",
+          },
+          tags: ["Test tag"],
+          address: {
+            "--primary": {
+              address_1: "123 Main Street",
+              address_2: "Apt 1",
+              adress_3: "Suite 1",
+            },
+          },
+          leads: [],
+          notes: [],
+        },
+      },
     };
   },
   useDeskproLatestAppContext: () => ({

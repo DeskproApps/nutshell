@@ -47,7 +47,7 @@ export const ViewList = () => {
 
   useInitialisedDeskproAppClient(
     (client) => {
-      if (!correctJson || !itemMutation.isSuccess) return;
+      if (!correctJson || !itemMutation.isSuccess || !data) return;
 
       client.registerElement("nutshellLink", {
         type: "cta_external_link",
