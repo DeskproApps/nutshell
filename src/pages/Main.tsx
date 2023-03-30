@@ -24,7 +24,11 @@ export const Main = () => {
   const { client } = useDeskproAppClient();
   const navigate = useNavigate();
 
-  const height = document.querySelector("body")?.clientHeight || 1500;
+  setTimeout(() => {
+    const height = document.querySelector("body")?.clientHeight || 1500;
+
+    client?.setHeight(height);
+  }, 1000);
 
   useDeskproAppEvents({
     async onElementEvent(id) {
@@ -46,12 +50,6 @@ export const Main = () => {
       type: "home_button",
     });
   });
-
-  useEffect(() => {
-    if (!client) return;
-
-    client.setHeight(height);
-  }, [client, height]);
 
   const contactQuery = useQueryWithClient(
     ["Contact", context?.data.user.primaryEmail],

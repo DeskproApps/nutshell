@@ -63,6 +63,7 @@ jest.mock("@deskpro/app-sdk", () => ({
       deregisterElement: () => {},
       setHeight: () => {},
       setTitle: () => {},
+      setHeight: () => {},
     });
   },
   useDeskproAppTheme: () => ({ mockTheme }),
