@@ -1,0 +1,18 @@
+{
+  "main": [
+    [
+      {
+        "name": "createdTime",
+        "label": "",
+        "type": "date"
+      }
+    ],
+    [
+      {
+        "name": "note",
+        "label": "",
+        "type": "text"
+      }
+    ]
+  ]
+}

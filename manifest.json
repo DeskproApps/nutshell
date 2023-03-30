@@ -1,29 +1,46 @@
 {
-  "name": "@deskpro-apps/my-app",
-  "title": "My App",
-  "description": "My Deskpro app",
-  "version": "0.0.0",
+  "name": "@deskpro-apps/nutshell",
+  "title": "Nutshell",
+  "description": "Easily manage your own business by tracking sales, organizing contacts, and generating reports, with Nutshell",
+  "version": "1.0.0",
   "scope": "agent",
   "isSingleInstall": false,
   "hasDevMode": true,
-  "targets": [{
-    "target": "ticket_sidebar",
-    "entrypoint": "index.html"
-  }],
+  "targets": [
+    {
+      "target": "user_sidebar",
+      "entrypoint": "#/"
+    },
+    {
+      "target": "organisation_sidebar",
+      "entrypoint": "#/"
+    }
+  ],
   "settings": {
-    "example": {
-      "title": "Example Setting",
-      "description": "Example backend only setting",
+    "api_key": {
+      "title": "API Key",
+      "description": "API key can be obtained by following our setup guide",
       "type": "string",
-      "isRequired": false,
+      "isRequired": true,
+      "isBackendOnly": true
+    },
+    "email": {
+      "title": "Email",
+      "description": "The email used in the account that owns the API key",
+      "type": "string",
+      "isRequired": true,
       "isBackendOnly": true
     }
   },
   "proxy": {
-    "whitelist": [{
-      "url": "https://jsonplaceholder.typicode.com/.*",
-      "methods": ["GET"],
-      "timeout": 20
-    }]
+    "whitelist": [
+      {
+        "url": "https://app.nutshell.com/api/v1/json",
+        "methods": [
+          "POST"
+        ],
+        "timeout": 20
+      }
+    ]
   }
 }
