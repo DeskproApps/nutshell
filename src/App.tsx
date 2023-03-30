@@ -18,9 +18,7 @@ import "@deskpro/deskpro-ui/dist/deskpro-custom-icons.css";
 import "@deskpro/deskpro-ui/dist/deskpro-ui.css";
 import { Suspense, useEffect, useRef, useState } from "react";
 import { ErrorFallback } from "./components/ErrorFallback/ErrorFallback";
-import { Redirect } from "./components/Redirect/Redirect";
 import { query } from "./utils/query";
-import { ViewList } from "./pages/ViewList/ViewList";
 
 function App() {
   const [bodyHeight, setBodyHeight] = useState(document.body.clientHeight);
@@ -60,14 +58,7 @@ function App() {
                 >
                   <Routes>
                     <Route path="/">
-                      <Route path="/redirect" element={<Redirect />} />
                       <Route index element={<Main />} />
-                      <Route path="view">
-                        <Route
-                          path=":objectName/:objectId"
-                          element={<ViewList />}
-                        />
-                      </Route>
                     </Route>
                   </Routes>
                 </ErrorBoundary>

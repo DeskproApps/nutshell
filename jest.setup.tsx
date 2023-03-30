@@ -31,7 +31,7 @@ jest.mock("./src/styles.ts", () => ({
 
 jest.mock("@deskpro/app-sdk", () => ({
   ...jest.requireActual("@deskpro/app-sdk"),
-  useDeskproAppClient: () => ({ client: {} }),
+  useDeskproAppClient: () => ({ client: { setHeight: () => {} } }),
   useDeskproAppEvents: (
     hooks: { [key: string]: (param: Record<string, unknown>) => void },
     deps: [] = []
@@ -58,6 +58,7 @@ jest.mock("@deskpro/app-sdk", () => ({
       registerElement: () => {},
       deregisterElement: () => {},
       setTitle: () => {},
+      setHeight: () => {},
     });
   },
   useDeskproAppTheme: () => ({ mockTheme }),

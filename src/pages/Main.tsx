@@ -14,7 +14,7 @@ import activitiesJson from "../mapping/activities.json";
 import { getActivitiesByContactId, getContactByEmail } from "../api/api";
 import { FieldMapping } from "../components/FieldMapping/FieldMapping";
 import { LogoAndLinkButton } from "../components/LogoAndLinkButton/LogoAndLinkButton";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 
 export const Main = () => {
   const { context } = useDeskproLatestAppContext();
