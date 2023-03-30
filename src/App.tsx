@@ -19,6 +19,8 @@ import "@deskpro/deskpro-ui/dist/deskpro-ui.css";
 import { Suspense, useEffect, useRef, useState } from "react";
 import { ErrorFallback } from "./components/ErrorFallback/ErrorFallback";
 import { query } from "./utils/query";
+import { ViewList } from "./pages/ViewList/ViewList";
+import { Redirect } from "./components/Redirect/Redirect";
 
 function App() {
   const [bodyHeight, setBodyHeight] = useState(document.body.clientHeight);
@@ -59,6 +61,13 @@ function App() {
                   <Routes>
                     <Route path="/">
                       <Route index element={<Main />} />
+                      <Route path="view">
+                        <Route
+                          path=":objectName/:objectId"
+                          element={<ViewList />}
+                        />
+                      </Route>
+                      <Route path="redirect" element={<Redirect />} />
                     </Route>
                   </Routes>
                 </ErrorBoundary>

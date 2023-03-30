@@ -25,10 +25,10 @@ export const Main = () => {
   const navigate = useNavigate();
 
   setTimeout(() => {
-    const height = document.querySelector("body")?.clientHeight || 1500;
+    const height = document.querySelector("body")?.clientHeight || 1920;
 
     client?.setHeight(height);
-  }, 1000);
+  }, 2000);
 
   useDeskproAppEvents({
     async onElementEvent(id) {

@@ -1,4 +1,5 @@
 import {
+  H1,
   IDeskproClient,
   Spinner,
   Stack,
@@ -50,7 +51,7 @@ export const ViewList = () => {
 
       client.registerElement("nutshellLink", {
         type: "cta_external_link",
-        url: `https://app.nutshell.com/${data.htmlUrlPath}`,
+        url: `https://app.nutshell.com${data.htmlUrlPath}`,
         hasIcon: true,
       });
 
@@ -118,11 +119,14 @@ export const ViewList = () => {
         idKey={correctJson.idKey}
       />
       {objectName === "lead" && (
-        <FieldMapping
-          fields={data.contacts ? data.contacts : []}
-          metadata={contactJson.viewLead}
-          idKey={correctJson.idKey}
-        />
+        <Stack vertical gap={4}>
+          <H1>Associated with</H1>
+          <FieldMapping
+            fields={data.contacts ? data.contacts : []}
+            metadata={contactJson.viewLead}
+            idKey={correctJson.idKey}
+          />
+        </Stack>
       )}
     </Stack>
   );
