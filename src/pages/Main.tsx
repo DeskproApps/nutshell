@@ -15,7 +15,7 @@ import activitiesJson from "../mapping/activity.json";
 import { getActivitiesByContactId, getContactByEmail } from "../api/api";
 import { FieldMapping } from "../components/FieldMapping/FieldMapping";
 import { LogoAndLinkButton } from "../components/LogoAndLinkButton/LogoAndLinkButton";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { titleAccessor } from "../utils/utils";
 import { useNavigate } from "react-router-dom";
 
@@ -24,7 +24,11 @@ export const Main = () => {
   const { client } = useDeskproAppClient();
   const navigate = useNavigate();
 
-  const height = document.querySelector("body")?.clientHeight || 1500;
+  setTimeout(() => {
+    const height = document.querySelector("body")?.clientHeight || 1500;
+
+    client?.setHeight(height);
+  }, 1000);
 
   useDeskproAppEvents({
     async onElementEvent(id) {
@@ -46,12 +50,6 @@ export const Main = () => {
       type: "home_button",
     });
   });
-
-  useEffect(() => {
-    if (!client) return;
-
-    client.setHeight(height);
-  }, [client, height]);
 
   const contactQuery = useQueryWithClient(
     ["Contact", context?.data.user.primaryEmail],
