@@ -1,3 +1,5 @@
+import { IContact, ILead, INote } from "../types/contact";
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getValueByKey = (object: any, key: string) => {
   const keys = key.split("."); // split the string into an array of keys
@@ -32,9 +34,9 @@ export const getFnKey = (name: string) => {
 
 export const titleAccessor = () => {
   return {
-    contact: (field) => field.name.displayName,
-    lead: (field) => field.description,
-    activity: (field) => field.name,
+    contact: (field: IContact & ILead & INote) => field.name.displayName,
+    lead: (field: IContact & ILead & INote) => field.description,
+    activity: (field: IContact & ILead & INote) => field.name,
   };
 };
 
