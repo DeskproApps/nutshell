@@ -29,7 +29,7 @@ export const mapFieldValues = (
 
           value = `${date.toLocaleDateString(
             "en-UK"
-          )} at ${date.toLocaleTimeString("en-UK")}`;
+          )} at ${date.getHours()}:${date.getMinutes()}`;
         })();
 
         break;
