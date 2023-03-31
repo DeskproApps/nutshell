@@ -1,7 +1,7 @@
 import { IDeskproClient, proxyFetch } from "@deskpro/app-sdk";
 import { IActivity } from "../types/activities";
 import { IAPIResponse } from "../types/basic";
-import { IContact, IContactAccountList } from "../types/contact";
+import { IContact, IContactAccountList, ILead } from "../types/contact";
 
 export type RequestMethod = "GET" | "POST" | "PATCH" | "DELETE";
 
@@ -55,8 +55,25 @@ export const getAllLeads = (client: IDeskproClient): Promise<unknown> =>
     id: 1,
   });
 
-export const getNotesByContactId = (client: IDeskproClient): Promise<unknown> =>
-  request(client);
+export const getLeadById = (
+  client: IDeskproClient,
+  leadId: number
+): Promise<IAPIResponse<ILead>> =>
+  request(client, {
+    method: "getLead",
+    params: [leadId],
+    id: 1,
+  });
+
+export const getActivityById = (
+  client: IDeskproClient,
+  activityId: number
+): Promise<IAPIResponse<IActivity>> =>
+  request(client, {
+    method: "getActivity",
+    params: [activityId],
+    id: 1,
+  });
 
 export const getActivitiesByContactId = (
   client: IDeskproClient,
@@ -71,9 +88,6 @@ export const getActivitiesByContactId = (
     ],
     id: 1,
   });
-
-export const getLeadsByUserId = (client: IDeskproClient): Promise<unknown> =>
-  request(client);
 
 export const request = async (
   client: IDeskproClient,

@@ -1,10 +1,12 @@
-import { ReactElement } from "react";
+import { Stack, Tag } from "@deskpro/deskpro-ui";
+import { ReactElement, useMemo } from "react";
 import { StyledLink } from "../styles";
 import { IContact, ILead, INote } from "../types/contact";
 import { IJson } from "../types/json";
+import { colors, getValueByKey } from "./utils";
 
 export const mapFieldValues = (
-  metadataFields: IJson["list"][0] | IJson["view"][0],
+  metadataFields: IJson["view"][0],
   field: IContact & ILead & INote
 ): {
   key: string | number;
@@ -13,12 +15,25 @@ export const mapFieldValues = (
   return metadataFields.map((metadataField) => {
     let value;
     switch (metadataField.type) {
-      case "date":
-        value = new Date(
-          field[metadataField.name as keyof IContact] as string
-        ).toLocaleDateString("en-UK");
+      case "date": {
+        if (!field[metadataField.name as keyof IContact]) {
+          value = null;
+
+          break;
+        }
+
+        (() => {
+          const date = new Date(
+            field[metadataField.name as keyof IContact] as string
+          );
+
+          value = `${date.toLocaleDateString(
+            "en-UK"
+          )} at ${date.getHours()}:${date.getMinutes()}`;
+        })();
 
         break;
+      }
 
       case "url": {
         value = field[metadataField.name as keyof IContact] ? (
@@ -41,6 +56,12 @@ export const mapFieldValues = (
       }
 
       case "percentage": {
+        if (!field[metadataField.name as keyof IContact]) {
+          value = null;
+
+          break;
+        }
+
         value = `${field[metadataField.name as keyof IContact]}%`;
 
         break;
@@ -69,6 +90,46 @@ export const mapFieldValues = (
 
       case "assignee": {
         value = field.owner?.name;
+
+        break;
+      }
+
+      case "address": {
+        const addressValues = field.address?.["--primary"];
+
+        value = `${[
+          addressValues.address_1,
+          addressValues.address_2,
+          addressValues.address_3,
+        ]
+          .filter((e) => e)
+          .join(", ")}, ${addressValues.city}, ${addressValues.state}, ${
+          addressValues.postalCode
+        }, ${addressValues.country}`;
+
+        break;
+      }
+
+      case "tags": {
+        const usedColorsTags = useMemo(() => {
+          return new Array(field.tags.length)
+            .fill(1)
+            .map(() => colors[Math.floor(Math.random() * colors?.length)]);
+          // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [field.tags]);
+
+        value = (
+          <Stack gap={4}>
+            {field.tags.map((tag, index) => (
+              <Tag color={usedColorsTags[index]} key={index} label={tag}></Tag>
+            ))}
+          </Stack>
+        );
+        break;
+      }
+
+      case "textInObj": {
+        value = getValueByKey(field, metadataField.name as string);
 
         break;
       }

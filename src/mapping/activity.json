@@ -1,0 +1,24 @@
+{
+  "idKey": "id",
+  "externalUrl": "activities/",
+  "title": "Activity",
+  "titleKeyName": "description",
+  "view": [
+    [
+      {
+        "name": "createdTime",
+        "label": "Date",
+        "type": "date"
+      }
+    ]
+  ],
+  "main": [
+    [
+      {
+        "name": "createdTime",
+        "label": "Date",
+        "type": "date"
+      }
+    ]
+  ]
+}

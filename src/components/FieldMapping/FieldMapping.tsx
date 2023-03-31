@@ -14,6 +14,7 @@ import { LogoAndLinkButton } from "../LogoAndLinkButton/LogoAndLinkButton";
 import { IJson } from "../../types/json";
 import { ReactElement } from "react";
 import { mapFieldValues } from "../../utils/mapFieldValues";
+import { StyledLink } from "../../styles";
 
 const SpaceBetweenFields = ({
   field: field,
@@ -41,34 +42,67 @@ type Props = {
   fields: any[];
   internalUrl?: string;
   externalUrl?: string;
-  metadata: IJson["list"] | IJson["view"];
-  titleKeyName?: string;
+  metadata: IJson["view"];
   idKey?: string;
+  internalChildUrl?: string;
+  externalChildUrl?: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  titleAccessor?: (field: any) => string;
+  childTitleAccessor?: (field: any) => string;
+  title?: string;
 };
 
 export const FieldMapping = ({
   fields,
   externalUrl,
+  internalUrl,
   metadata,
   idKey = "",
-  titleAccessor = () => "",
+  internalChildUrl,
+  externalChildUrl,
+  childTitleAccessor,
+  title,
 }: Props) => {
   const { theme } = useDeskproAppTheme();
 
   return (
     <Stack vertical gap={4} style={{ width: "100%" }}>
+      <Stack
+        style={{
+          justifyContent: "space-between",
+          width: "100%",
+          alignItems: "center",
+        }}
+      >
+        {title && internalUrl ? (
+          <StyledLink title="title" to={internalUrl + fields[0][idKey]}>
+            {title}
+          </StyledLink>
+        ) : (
+          <H1>{title}</H1>
+        )}
+        {externalUrl && (
+          <LogoAndLinkButton endpoint={externalUrl}></LogoAndLinkButton>
+        )}
+      </Stack>
       {fields.map((field, i) => (
         <Stack vertical style={{ width: "100%" }} gap={5} key={i}>
-          <Stack style={{ justifyContent: "space-between", width: "100%" }}>
-            <H3>{titleAccessor(field)}</H3>
-            {externalUrl && (
-              <LogoAndLinkButton
-                endpoint={externalUrl + field[idKey]}
-              ></LogoAndLinkButton>
-            )}
-          </Stack>
+          {(internalChildUrl || childTitleAccessor || externalChildUrl) && (
+            <Stack style={{ justifyContent: "space-between", width: "100%" }}>
+              {internalChildUrl && childTitleAccessor && (
+                <StyledLink to={internalChildUrl + field[idKey]}>
+                  {childTitleAccessor(field)}
+                </StyledLink>
+              )}
+              {!internalChildUrl && childTitleAccessor && (
+                <H3>{childTitleAccessor(field)}</H3>
+              )}
+              {externalChildUrl && (
+                <LogoAndLinkButton
+                  endpoint={externalChildUrl + field[idKey]}
+                ></LogoAndLinkButton>
+              )}
+            </Stack>
+          )}
           {metadata?.map((metadataFields, i) => {
             const usableFields = mapFieldValues(metadataFields, field);
 
