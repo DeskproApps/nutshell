@@ -1,7 +1,6 @@
 import {
   H1,
   Stack,
-  useDeskproAppClient,
   useDeskproAppEvents,
   useDeskproLatestAppContext,
   useInitialisedDeskproAppClient,
@@ -21,14 +20,7 @@ import { useNavigate } from "react-router-dom";
 
 export const Main = () => {
   const { context } = useDeskproLatestAppContext();
-  const { client } = useDeskproAppClient();
   const navigate = useNavigate();
-
-  setTimeout(() => {
-    const height = document.querySelector("body")?.clientHeight || 1920;
-
-    client?.setHeight(height);
-  }, 2000);
 
   useDeskproAppEvents({
     async onElementEvent(id) {
