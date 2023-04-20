@@ -23,7 +23,7 @@ function App() {
   return (
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
-    <div ref={bodyRef}>
+    <div>
       <HashRouter>
         <QueryClientProvider client={query}>
           <Suspense fallback={<LoadingSpinner />}>
