@@ -1,7 +1,7 @@
 {
   "name": "@deskpro-apps/nutshell",
   "title": "Nutshell",
-  "description": "Easily manage your own business by tracking sales, organizing contacts, and generating reports, with Nutshell.",
+  "description": "Easily manage your own business by tracking sales, organizing contacts, and generating reports, with Nutshell",
   "version": "1.0.3",
   "scope": "agent",
   "isSingleInstall": false,
