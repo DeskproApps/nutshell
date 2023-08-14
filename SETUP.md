@@ -14,4 +14,4 @@ Provide a name for the API key and assign it the API + user impersonation permis
 
 Click "New API Key" to generate the key.
 
-Copy the newly generated API key and paste it into your Nutshell settings or installation.
+Copy the newly generated API key and paste it into the API Key field under the settings tab in Deskpro's drawer for Nutshell.
