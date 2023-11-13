@@ -5,11 +5,18 @@
   "version": "1.0.7",
   "scope": "agent",
   "isSingleInstall": false,
+  "appStoreUrl": "https://www.deskpro.com/product-embed/apps/nutshell",
   "hasDevMode": true,
   "serveUrl": "https://apps-cdn.deskpro-service.com/__name__/__version__",
   "targets": [
-    { "target": "user_sidebar", "entrypoint": "#/" },
-    { "target": "organisation_sidebar", "entrypoint": "#/" }
+    {
+      "target": "user_sidebar",
+      "entrypoint": "#/"
+    },
+    {
+      "target": "organisation_sidebar",
+      "entrypoint": "#/"
+    }
   ],
   "settings": {
     "api_key": {
@@ -31,7 +38,9 @@
     "whitelist": [
       {
         "url": "https://app.nutshell.com/api/v1/json",
-        "methods": ["POST"],
+        "methods": [
+          "POST"
+        ],
         "timeout": 20
       }
     ]
