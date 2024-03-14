@@ -1,11 +1,6 @@
+import { H1, H3, P11, P8, Stack, P5 } from "@deskpro/deskpro-ui";
 import {
-  H1,
-  H3,
-  P11,
-  P8,
-  Stack,
   useDeskproAppTheme,
-  P5,
   PropertyRow,
   HorizontalDivider,
   Property,
@@ -125,9 +120,7 @@ export const FieldMapping = ({
                 return (
                   <PropertyRow key={i}>
                     {usableFields.map((e, ii) => (
-                      <Property title={e.key as string} key={ii}>
-                        <P5>{e.value || "-"}</P5>
-                      </Property>
+                      <Property label={e.key as string} key={ii} text={e.value}/>
                     ))}
                   </PropertyRow>
                 );

@@ -1,8 +1,6 @@
+import { H1, Stack, Spinner } from "@deskpro/deskpro-ui";
 import {
-  H1,
   IDeskproClient,
-  Spinner,
-  Stack,
   useDeskproAppEvents,
   useInitialisedDeskproAppClient,
   useMutationWithClient,
