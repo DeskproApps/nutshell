@@ -18,7 +18,7 @@ import { titleAccessor } from "../utils/utils";
 import { useNavigate } from "react-router-dom";
 
 export const Main = () => {
-  const { context } = useDeskproLatestAppContext();
+  const { context } = useDeskproLatestAppContext<{user: {primaryEmail: string}}, never>();
   const navigate = useNavigate();
 
   useDeskproAppEvents({
@@ -43,8 +43,8 @@ export const Main = () => {
   });
 
   const contactQuery = useQueryWithClient(
-    ["Contact", context?.data.user.primaryEmail],
-    (client) => getContactByEmail(client, context?.data.user.primaryEmail),
+    ["Contact", String(context?.data?.user.primaryEmail)],
+    (client) => getContactByEmail(client, String(context?.data?.user.primaryEmail)),
     {
       enabled: !!context,
     }
@@ -53,7 +53,7 @@ export const Main = () => {
   const titles = useMemo(() => titleAccessor(), []);
 
   const activityQuery = useQueryWithClient(
-    ["Activities", context?.data.user.primaryEmail],
+    ["Activities", String(context?.data?.user.primaryEmail)],
     (client) =>
       getActivitiesByContactId(client, contactQuery.data?.result.id as number),
     {
