@@ -97,18 +97,26 @@ export const mapFieldValues = (
       case "address": {
         const addressValues = field.address?.["--primary"];
 
-        value = `${[
+        if (!addressValues) {
+          value = "";
+
+          break;
+        };
+
+        const addressParts = [
           addressValues.address_1,
           addressValues.address_2,
           addressValues.address_3,
-        ]
-          .filter((e) => e)
-          .join(", ")}, ${addressValues.city}, ${addressValues.state}, ${
-          addressValues.postalCode
-        }, ${addressValues.country}`;
+          addressValues.city,
+          addressValues.state,
+          addressValues.postalCode,
+          addressValues.country
+        ].filter(Boolean);
+
+        value = addressParts.join(", ");
 
         break;
-      }
+      };
 
       case "tags": {
         const usedColorsTags = useMemo(() => {
