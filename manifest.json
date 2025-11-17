@@ -32,7 +32,15 @@
       {
         "url": "https://app.nutshell.com/api/v1/json",
         "methods": ["POST"],
-        "timeout": 20
+        "timeout": 20,
+        "settingsInjection": {
+          "email": {
+            "header": ["Authorization"]
+          },
+          "api_key": {
+            "header": ["Authorization"]
+          }
+        }
       }
     ]
   }
